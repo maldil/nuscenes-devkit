@@ -130,10 +130,9 @@ class KittiConverter:
                                           inverse=False)
             ego_to_cam = transform_matrix(cs_record_cam['translation'], Quaternion(cs_record_cam['rotation']),
                                           inverse=True)
-            velo_to_cam = np.dot(ego_to_cam, lid_to_ego)
 
             # Convert from KITTI to nuScenes LIDAR coordinates, where we apply velo_to_cam.
-            velo_to_cam_kitti = np.dot(velo_to_cam, kitti_to_nu_lidar.transformation_matrix)
+            velo_to_cam_kitti = np.dot(ego_to_cam, lid_to_ego, kitti_to_nu_lidar.transformation_matrix)
 
             # Currently not used.
             imu_to_velo_kitti = np.zeros((3, 4))  # Dummy values.
